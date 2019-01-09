@@ -1,6 +1,10 @@
 buildscript {
     ext {
         springBootVersion = "2.0.6.RELEASE"
+        
+        springFoxArtifacts = ["springfox-swagger2", "springfox-swagger-ui"]
+        springFoxVersion = "2.6.0"
+        swaggerCodeGenVersion = "2.2.1"
     }
 
     repositories {
@@ -15,7 +19,11 @@ buildscript {
 
 plugins {
     id "java"
+    id 'org.asciidoctor.convert' version '1.5.3'
+    id 'org.hidetake.swagger.generator' version '1.4.0'
+
 }
+
 
 apply plugin: 'org.springframework.boot'
 
@@ -28,6 +36,13 @@ dependencies {
     compile("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.7")
     testCompile("org.springframework.boot:spring-boot-starter-test:$springBootVersion")
     testCompile("org.mockito:mockito-core:2.23.4")
+
+
+    springFoxArtifacts.each {
+        artifact -> compile("io.springfox:$artifact:$springFoxVersion")
+    }
+
+    swaggerCodegen("io.swagger:swagger-codegen-cli:$swaggerCodeGenVersion")
 }
 
 
@@ -38,3 +53,4 @@ bootRun.environment([
 test.environment([
         "WELCOME_MESSAGE": "Hello from test",
 ])
+
