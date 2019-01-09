@@ -21,6 +21,7 @@ public class PalTrackerApplication {
         return new InMemoryTimeEntryRepository();
     }
 
+    //overriding spring boot's default implementation for java LocalDate usage
     @Bean
     public ObjectMapper jsonObjectMapper() {
         return Jackson2ObjectMapperBuilder.json()
